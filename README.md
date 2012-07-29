@@ -7,6 +7,8 @@ Samples list (done)
 ==========================
 * Edge detection (Canny, Sobel, Schaar, Harris)
 * Feature Detection (SURF, ORB, FREAK)
+* Object Tracking (LKT)
+* Combined feature detection and tracking
 
 Samples list (plans)
 ==========================

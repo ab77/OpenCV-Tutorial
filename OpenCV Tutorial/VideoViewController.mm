@@ -35,6 +35,8 @@
 @synthesize optionsView;
 @synthesize optionsViewController;
 @synthesize actionSheet;
+@synthesize captureReferenceFrameButton;
+@synthesize clearReferenceFrameButton;
 
 - (void)viewDidLoad
 {
@@ -59,6 +61,13 @@
                                         cancelButtonTitle:@"Cancel" 
                                    destructiveButtonTitle:nil 
                                         otherButtonTitles:kSaveImageActionTitle, kComposeTweetWithImage, nil];
+    
+    if ( !self.currentSample->isReferenceFrameRequired() )
+    {
+        // hide buttons
+        captureReferenceFrameButton.enabled = NO;
+        clearReferenceFrameButton.enabled = NO;
+    }
 
 }
 

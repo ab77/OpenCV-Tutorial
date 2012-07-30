@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
@@ -111,13 +110,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9xd-hx-Ajn"/>
-                                    <barButtonItem image="photos_polaroid.png" style="plain" id="23d-4k-fUX">
+                                    <barButtonItem image="photos_polaroid.png" style="plain" id="23d-4k-fUX" userLabel="setReferenceFrameButton">
                                         <connections>
                                             <action selector="captureReferenceFrame:" destination="K8a-OQ-WeD" id="bY0-H1-LKr"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5z9-2U-tKS"/>
-                                    <barButtonItem image="refresh_straight_arrows.png" style="plain" id="BxJ-sk-12z">
+                                    <barButtonItem image="refresh_straight_arrows.png" style="plain" id="BxJ-sk-12z" userLabel="clearReferenceFrameButton">
                                         <connections>
                                             <action selector="clearReferenceFrame:" destination="K8a-OQ-WeD" id="E5Q-Mo-AeM"/>
                                         </connections>
@@ -145,6 +144,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="actionSheetButton" destination="p92-gf-OY7" id="LCM-0O-r2h"/>
+                        <outlet property="captureReferenceFrameButton" destination="23d-4k-fUX" id="EzL-pH-iX3"/>
+                        <outlet property="clearReferenceFrameButton" destination="BxJ-sk-12z" id="86Q-yo-Mgp"/>
                         <outlet property="containerView" destination="abh-x4-lYu" id="Qt5-DY-d5V"/>
                         <outlet property="options" destination="ZgH-2B-QIm" id="cn3-HU-r2P"/>
                         <outlet property="toggleCameraButton" destination="n3D-dJ-ydc" id="cui-FS-res"/>

@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toggleCameraButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *options;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *captureReferenceFrameButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *clearReferenceFrameButton;
 
 @property (nonatomic, strong) GLESImageView *imageView;
 @property (nonatomic, strong) UITableView * optionsView;

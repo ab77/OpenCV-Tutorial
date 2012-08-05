@@ -96,9 +96,14 @@ public:
                            int whichImage); // image to compute epipolar lines in
     
     void drawPerspective(cv::Mat& image, // output image
-                        cv::Mat& image1, // input (object) image
-                        std::vector<cv::Point2f>& points1, // keypoints 1
-                        std::vector<cv::Point2f>& points2); // keypoints 2
+                         cv::Mat& image1, // input (object) image
+                         std::vector<cv::Point2f>& points1, // keypoints 1
+                         std::vector<cv::Point2f>& points2); // keypoints 2
+    
+    void drawCustomPoints(cv::Mat& image, // output image
+                          std::vector<cv::Point2f>& points1, // keypoints 1
+                          std::vector<cv::Point2f>& points2, // keypoints 2
+                          std::vector<cv::Point2f>& points3); // keypoints 3
 };
 
 #endif

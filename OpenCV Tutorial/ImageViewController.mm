@@ -93,8 +93,6 @@
   
 }
 
-
-
 #pragma mark - Sample management
 
 - (void) setImage:(UIImage*) image

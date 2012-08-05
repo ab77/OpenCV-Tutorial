@@ -83,11 +83,25 @@ void DetectTrackSample::setReferenceFrame(const cv::Mat& reference)
 }
 
 // Reset object keypoints and descriptors
-void DetectTrackSample::resetReferenceFrame() const
+void DetectTrackSample::resetReferenceFrame()
 {
+    customPoints.clear();
     detectObject = false;
     computeObject = false;
     trackObject = false;
+}
+
+// process custom points
+void DetectTrackSample::addCustomPoints(const std::vector<cv::Point2f>& points)
+{
+    if (!points.empty())
+    {
+        size_t i;
+        for( i = 0; i < points.size(); i++ )
+        {
+            customPoints.push_back(points[i]);
+        }
+    }
 }
 
 //! Processes a frame and returns output image 
@@ -210,7 +224,21 @@ bool DetectTrackSample::processFrame(const cv::Mat& inputFrame, cv::Mat& outputF
             
             // init points array for tracking
             pointsNext = sceneKeypoints2f;
-            
+
+            // draw custom points
+            if (!customPoints.empty())
+            {
+                rmatcher.drawCustomPoints(outputFrame,
+                                          objectKeypoints2f,
+                                          sceneKeypoints2f,
+                                          customPoints);
+                size_t i;
+                for( i = 0; i < customPoints.size(); i++ )
+                {
+                    pointsNext.push_back(customPoints[i]);
+                }
+            }
+
             // set flags
             detectObject = false;
             trackObject = true;

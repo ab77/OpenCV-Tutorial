@@ -53,11 +53,36 @@ void ObjectTrackingSample::setReferenceFrame(const cv::Mat& reference)
     computeObject = true;
 }
 
-// Reset object keypoints and descriptors
-void ObjectTrackingSample::resetReferenceFrame() const
+// Clear tracked points arrays
+void ObjectTrackingSample::resetReferenceFrame()
 {
+    pointsPrev.clear();
+    pointsNext.clear();
     trackObject = false;
     computeObject = false;
+}
+
+// process custom points
+void ObjectTrackingSample::addCustomPoints(const std::vector<cv::Point2f>& points) {
+    
+    // prepare the tracking class
+    ObjectTrackingClass ot;
+    ot.setMaxCorners(m_maxCorners);
+    
+    // push custom points into the array of points to be tracked
+    if (!points.empty())
+    {
+        size_t i;
+        for( i = 0; i < points.size(); i++ )
+        {        
+            std::vector<cv::Point2f> tmp;
+            cv::Point2f point = cv::Point2f(points[i].x,points[i].y);
+            tmp.push_back(point);
+            // refine point
+            cv::Point2f result = ot.refine(imagePrev, tmp);
+            pointsPrev.push_back(result);
+        }
+    }
 }
 
 //! Processes a frame and returns output image 

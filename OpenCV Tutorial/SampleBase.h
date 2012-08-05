@@ -34,7 +34,10 @@ public:
     virtual void setReferenceFrame(const cv::Mat& reference);
     
     // Resets the reference frame
-    virtual void resetReferenceFrame() const;
+    virtual void resetReferenceFrame();
+    
+    // process custom points array
+    virtual void addCustomPoints(const std::vector<cv::Point2f>& points);
     
     //! Processes a frame and returns output image 
     virtual bool processFrame(const cv::Mat& inputFrame, cv::Mat& outputFrame) = 0;

@@ -140,7 +140,13 @@ void SampleBase::setReferenceFrame(const cv::Mat& reference)
 }
 
 // Resets the reference frame
-void SampleBase::resetReferenceFrame() const
+void SampleBase::resetReferenceFrame()
 {
     // Does nothing. Override this method if you need to
+}
+
+// process custom points array
+void SampleBase::addCustomPoints(const std::vector<cv::Point2f>& points)
+{
+    // does nothing, override this method if required
 }

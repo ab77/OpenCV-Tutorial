@@ -58,6 +58,10 @@ public:
                std::vector<cv::Point2f>& points2, // points array 2
                cv::vector<uchar>& status, // status array
                cv::vector<float>& err); // error array
+    
+    // refine corners
+    cv::Point2f refine(cv::Mat& image, // output image
+                                    std::vector<cv::Point2f>& points); // points to refine
 };
 
 #endif

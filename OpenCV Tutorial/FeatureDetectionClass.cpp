@@ -78,10 +78,37 @@ void FeatureDetectionClass::drawMatches(cv::Mat& image, // output image
                                         std::vector<cv::DMatch>& matches, // matches
                                         std::vector<cv::Point2f>& points) // keypoints
 {
-    for (size_t it= 0; it < matches.size(); ++it) {
-        cv::circle( image, points[it], 3, cv::Scalar(0,0,255), -1, 8);
+    for (size_t it = 0; it < matches.size(); ++it)
+    {
+        cv::circle(image, points[it], 3, cv::Scalar(0,0,255), -1, 8);
     }
+}
 
+// draw custom points
+void FeatureDetectionClass::drawCustomPoints(cv::Mat& image, // output image
+                                             std::vector<cv::Point2f>& points1, // keypoints 1
+                                             std::vector<cv::Point2f>& points2, // keypoints 2
+                                             std::vector<cv::Point2f>& points3) // keypoints 3
+{
+    if (!points1.empty() && !points2.empty() && !points3.empty())
+    {
+        cv::Mat H = cv::findHomography( cv::Mat(points1), cv::Mat(points2), CV_RANSAC );
+        
+        if( !H.empty() )
+        {
+            std::vector<cv::Point2f> transformedPoints;
+            transformedPoints.resize(points3.size());
+            
+            // calculate perspective transformation of custom points within the scene
+            cv::perspectiveTransform( cv::Mat(points3), cv::Mat(transformedPoints), H);
+            
+            for (size_t it = 0; it < transformedPoints.size(); ++it)
+            {
+                // draw custom points (yellow)
+                cv::circle(image, transformedPoints[it], 5, cv::Scalar(0,255,255), -1, 8);
+            }
+        }
+    }
 }
 
 // compute homography (RANSAC)
@@ -90,28 +117,30 @@ void FeatureDetectionClass::drawPerspective(cv::Mat& image, // output image
                                             std::vector<cv::Point2f>& points1, // keypoints 1
                                             std::vector<cv::Point2f>& points2) // keypoints 2
 {
-    cv::Mat H = cv::findHomography( points1, points2, CV_RANSAC );
-    if( !H.empty() ) 
+    if (!points1.empty() && !points2.empty())
     {
-        // get the corners from the object image
-        std::vector<cv::Point2f> obj_corners(4), scene_corners(4);
-        
-        obj_corners[0] = cvPoint(0,0);
-        obj_corners[1] = cvPoint( image1.cols, 0 );
-        obj_corners[2] = cvPoint( image1.cols, image1.rows );
-        obj_corners[3] = cvPoint( 0, image1.rows );
-        
-        // calculate perspective transformation of object corners within scene
-        cv::perspectiveTransform( obj_corners, scene_corners, H);
-        
-        // draw lines between the corners (the mapped object in the scene)
-        cv::line( image, scene_corners[0], scene_corners[1], cv::Scalar( 0, 0, 255 ), 4 );
-        cv::line( image, scene_corners[1], scene_corners[2], cv::Scalar( 0, 0, 255 ), 4 );
-        cv::line( image, scene_corners[2], scene_corners[3], cv::Scalar( 0, 0, 255 ), 4 );
-        cv::line( image, scene_corners[3], scene_corners[0], cv::Scalar( 0, 0, 255 ), 4 );
+        cv::Mat H = cv::findHomography( cv::Mat(points1), cv::Mat(points2), CV_RANSAC );
+        if( !H.empty() )
+        {
+            // get the corners from the object image
+            std::vector<cv::Point2f> obj_corners(4), scene_corners(4);
+            
+            obj_corners[0] = cvPoint(0,0);
+            obj_corners[1] = cvPoint( image1.cols, 0 );
+            obj_corners[2] = cvPoint( image1.cols, image1.rows );
+            obj_corners[3] = cvPoint( 0, image1.rows );
+            
+            // calculate perspective transformation of object corners within scene
+            cv::perspectiveTransform( cv::Mat(obj_corners), cv::Mat(scene_corners), H);
+            
+            // draw lines between the corners (the mapped object in the scene)
+            cv::line( image, scene_corners[0], scene_corners[1], cv::Scalar( 0, 0, 255 ), 4 );
+            cv::line( image, scene_corners[1], scene_corners[2], cv::Scalar( 0, 0, 255 ), 4 );
+            cv::line( image, scene_corners[2], scene_corners[3], cv::Scalar( 0, 0, 255 ), 4 );
+            cv::line( image, scene_corners[3], scene_corners[0], cv::Scalar( 0, 0, 255 ), 4 );
+        }
     }
 }
-
 
 // Clear matches for which NN ratio is > than threshold
 // return the number of removed points

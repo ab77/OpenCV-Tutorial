@@ -80,10 +80,24 @@ void FeatureDetectionSample::setReferenceFrame(const cv::Mat& reference)
 }
 
 // Reset object keypoints and descriptors
-void FeatureDetectionSample::resetReferenceFrame() const
+void FeatureDetectionSample::resetReferenceFrame()
 {
+    customPoints.clear();
     detectObject = false;
     computeObject = false;
+}
+
+// process custom points
+void FeatureDetectionSample::addCustomPoints(const std::vector<cv::Point2f>& points)
+{
+    if (!points.empty())
+    {
+        size_t i;
+        for( i = 0; i < points.size(); i++ )
+        {        
+            customPoints.push_back(points[i]);
+        }
+    }
 }
 
 //! Processes a frame and returns output image 
@@ -171,7 +185,7 @@ bool FeatureDetectionSample::processFrame(const cv::Mat& inputFrame, cv::Mat& ou
             // draw perspetcive lines (box object in the frame)
             if (m_drawPerspective)
                 rmatcher.drawPerspective(outputFrame,
-                                        objectImage,
+                                         objectImage,
                                          objectKeypoints2f,
                                          sceneKeypoints2f);
             
@@ -188,6 +202,15 @@ bool FeatureDetectionSample::processFrame(const cv::Mat& inputFrame, cv::Mat& ou
                                            grayImage,
                                            objectKeypoints2f,
                                            sceneKeypoints2f, 1);
+            
+            // draw custom points
+            if (!customPoints.empty())
+            {
+                rmatcher.drawCustomPoints(outputFrame,
+                                          objectKeypoints2f,
+                                          sceneKeypoints2f,
+                                          customPoints);
+            }
         }
     }
     

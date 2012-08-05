@@ -22,11 +22,15 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *clearReferenceFrameButton;
 
 @property (nonatomic, strong) GLESImageView *imageView;
-@property (nonatomic, strong) UITableView * optionsView;
-@property (nonatomic, strong) UIPopoverController * optionsPopover;
-@property (nonatomic, strong) UIViewController * optionsViewController;
+@property (nonatomic, strong) UITableView *optionsView;
+@property (nonatomic, strong) UIPopoverController *optionsPopover;
+@property (nonatomic, strong) UIViewController *optionsViewController;
 
-@property (nonatomic, strong) UIActionSheet * actionSheet;
+@property (nonatomic, strong) UIImageView *referenceFrameView;
+@property (nonatomic, strong) UIPopoverController *referenceFramePopover;
+@property (nonatomic, strong) UIViewController *referenceFrameViewController;
+
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 - (IBAction)toggleCameraPressed:(id)sender;
 - (IBAction)showOptions:(id)sender;

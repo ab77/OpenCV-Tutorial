@@ -19,9 +19,9 @@
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) OptionsTableView *optionsView;
-@property (nonatomic, strong) UIPopoverController * optionsPopover;
-@property (nonatomic, strong) UIViewController * optionsViewController;
-@property (nonatomic, strong) UIActionSheet * actionSheet;
+@property (nonatomic, strong) UIPopoverController *optionsPopover;
+@property (nonatomic, strong) UIViewController *optionsViewController;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *takePhotoButton;

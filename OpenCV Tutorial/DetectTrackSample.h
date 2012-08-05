@@ -31,7 +31,10 @@ public:
     virtual void setReferenceFrame(const cv::Mat& reference);
     
     // clears reference frame parameters
-    virtual void resetReferenceFrame() const;
+    virtual void resetReferenceFrame();
+    
+    // process custom points array
+    virtual void addCustomPoints(const std::vector<cv::Point2f>& points);
     
     //! Processes a frame and returns output image 
     virtual bool processFrame(const cv::Mat& inputFrame, cv::Mat& outputFrame);
@@ -45,7 +48,7 @@ private:
     
     std::string m_fdAlgorithmName, m_feAlgorithmName;
     
-    cv::vector<cv::Point2f> pointsPrev, pointsNext;
+    cv::vector<cv::Point2f> pointsPrev, pointsNext, customPoints;
     
     std::vector<cv::KeyPoint> objectKeypoints;
     

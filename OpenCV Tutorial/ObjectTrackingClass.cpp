@@ -19,6 +19,14 @@ void ObjectTrackingClass::setMaxCorners(int max_c) {
     maxCorners = max_c;
 }
 
+// refine corners
+cv::Point2f ObjectTrackingClass::refine(cv::Mat& image, // output image
+                                                     std::vector<cv::Point2f>& points) // points to refine
+{
+    cv::cornerSubPix(image, points, subPixWinSize, cv::Size(-1,-1), termcrit);
+    return points[0];
+}
+
 // initialise tracker
 void ObjectTrackingClass::init(cv::Mat& image, // output image
                                cv::Mat& image1, // input image

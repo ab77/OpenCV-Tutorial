@@ -50,7 +50,15 @@ bool ObjectTrackingSample::isReferenceFrameRequired() const
 void ObjectTrackingSample::setReferenceFrame(const cv::Mat& reference)
 {
     getGray(reference, imagePrev);
-    computeObject = true;
+    
+    // check if custom points array is populated
+    if (pointsPrev.empty())
+    {
+        computeObject = true;
+        
+    } else {
+        trackObject = true;
+    }
 }
 
 // Clear tracked points arrays
@@ -65,13 +73,13 @@ void ObjectTrackingSample::resetReferenceFrame()
 // process custom points
 void ObjectTrackingSample::addCustomPoints(const std::vector<cv::Point2f>& points) {
     
-    // prepare the tracking class
-    ObjectTrackingClass ot;
-    ot.setMaxCorners(m_maxCorners);
-    
     // push custom points into the array of points to be tracked
     if (!points.empty())
     {
+        // prepare the tracking class
+        ObjectTrackingClass ot;
+        ot.setMaxCorners(m_maxCorners);
+        
         size_t i;
         for( i = 0; i < points.size(); i++ )
         {        
@@ -82,6 +90,9 @@ void ObjectTrackingSample::addCustomPoints(const std::vector<cv::Point2f>& point
             cv::Point2f result = ot.refine(imagePrev, tmp);
             pointsPrev.push_back(result);
         }
+        
+        // begin tracking
+        trackObject = true;
     }
 }
 
